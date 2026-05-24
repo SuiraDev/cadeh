@@ -10,17 +10,17 @@ const fs = require('fs');
 const path = require('path');
 
 const pkgRoot = path.resolve(__dirname, '..');
-const harnessSh = path.join(pkgRoot, 'bin', 'harness');
+const cadehSh = path.join(pkgRoot, 'bin', 'cadeh');
 
-if (!fs.existsSync(harnessSh)) {
-  console.error('harness: bin/cadeh não encontrado em', pkgRoot);
+if (!fs.existsSync(cadehSh)) {
+  console.error('cadeh: bin/cadeh não encontrado em', pkgRoot);
   process.exit(1);
 }
 
 const bash = process.platform === 'win32' ? 'bash' : '/bin/bash';
 const args = process.argv.slice(2);
 
-const result = spawnSync(bash, [harnessSh, ...args], {
+const result = spawnSync(bash, [cadehSh, ...args], {
   stdio: 'inherit',
   env: {
     ...process.env,
@@ -29,7 +29,7 @@ const result = spawnSync(bash, [harnessSh, ...args], {
 });
 
 if (result.error) {
-  console.error('harness:', result.error.message);
+  console.error('cadeh:', result.error.message);
   console.error('Instale Bash (WSL ou Git Bash no Windows).');
   process.exit(1);
 }

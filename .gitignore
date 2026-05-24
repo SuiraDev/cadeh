@@ -8,6 +8,17 @@ Thumbs.db
 *.swo
 *~
 
+# Secrets / credentials (nunca versionar)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+*credentials*.json
+
 # Local / temp
 *.log
 .tmp/
