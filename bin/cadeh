@@ -1,0 +1,275 @@
+#!/usr/bin/env bash
+# CADEH — Controlled AI Development Environment CADEH — CLI
+set -euo pipefail
+
+_SCRIPT="$(readlink -f "${BASH_SOURCE[0]}")"
+CADEH_ROOT="$(cd "$(dirname "$_SCRIPT")/.." && pwd)"
+# shellcheck source=../lib/common.sh
+source "${CADEH_ROOT}/lib/common.sh"
+# shellcheck source=../lib/tlc.sh
+source "${CADEH_ROOT}/lib/tlc.sh"
+# shellcheck source=../lib/state.sh
+source "${CADEH_ROOT}/lib/state.sh"
+# shellcheck source=../lib/install.sh
+source "${CADEH_ROOT}/lib/install.sh"
+# shellcheck source=../lib/uninstall.sh
+source "${CADEH_ROOT}/lib/uninstall.sh"
+# shellcheck source=../lib/help.sh
+source "${CADEH_ROOT}/lib/help.sh"
+# shellcheck source=../lib/status.sh
+source "${CADEH_ROOT}/lib/status.sh"
+# shellcheck source=../lib/git.sh
+source "${CADEH_ROOT}/lib/git.sh"
+# shellcheck source=../lib/init.sh
+source "${CADEH_ROOT}/lib/init.sh"
+# shellcheck source=../lib/codegraph.sh
+source "${CADEH_ROOT}/lib/codegraph.sh"
+
+cmd_help() {
+  if [[ $# -eq 0 ]]; then
+    usage_main
+  else
+    help_command "$1"
+  fi
+}
+
+cmd_install() {
+  local force="false"
+  local target="."
+  local agent="cursor"
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -f|--force) force="true"; shift ;;
+      --agent)
+        [[ $# -ge 2 ]] || { err "--agent requer nome do agente"; exit 1; }
+        agent="$2"
+        if ! resolve_agent "$agent" >/dev/null; then exit 1; fi
+        shift 2
+        ;;
+      -h|--help) help_command install; return ;;
+      -*) err "Opção desconhecida: $1"; exit 1 ;;
+      *) target="$1"; shift ;;
+    esac
+  done
+
+  install_project "$target" "$force" "$CADEH_ROOT" "$agent"
+}
+
+cmd_global() {
+  local agent="cursor"
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --agent)
+        [[ $# -ge 2 ]] || { err "--agent requer nome do agente"; exit 1; }
+        agent="$2"
+        if ! resolve_agent "$agent" >/dev/null; then exit 1; fi
+        shift 2
+        ;;
+      -h|--help) help_command global; return ;;
+      *) shift ;;
+    esac
+  done
+  install_global "$CADEH_ROOT" "$agent"
+}
+
+cmd_uninstall() {
+  local force="false"
+  local global="false"
+  local purge="false"
+  local with_codegraph="false"
+  local agent=""
+  local target="."
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -f|--force) force="true"; shift ;;
+      -g|--global) global="true"; shift ;;
+      --purge) purge="true"; shift ;;
+      --codegraph|--with-codegraph) with_codegraph="true"; shift ;;
+      --agent)
+        [[ $# -ge 2 ]] || { err "--agent requer nome do agente"; exit 1; }
+        agent="$2"
+        if ! resolve_agent "$agent" >/dev/null; then exit 1; fi
+        shift 2
+        ;;
+      -h|--help) help_command uninstall; return ;;
+      -*) err "Opção desconhecida: $1"; exit 1 ;;
+      *) target="$1"; shift ;;
+    esac
+  done
+
+  # Detect agent if not specified
+  if [[ -z "$agent" ]]; then
+    agent="$(_detect_project_agent "$target" 2>/dev/null || echo "cursor")"
+  fi
+
+  uninstall_project "$target" "$CADEH_ROOT" "$force" "$purge" "$with_codegraph" "$agent"
+
+  if [[ "$global" == "true" ]]; then
+    uninstall_global "$agent"
+  fi
+}
+
+cmd_update() {
+  case "${1:-}" in
+    -h|--help) help_command update; return ;;
+  esac
+  cmd_install "$@"
+}
+
+cmd_new() {
+  local kind="" name="" target="."
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -C|--path)
+        [[ $# -ge 2 ]] || { err "Opção $1 requer caminho"; exit 1; }
+        target="$2"
+        shift 2
+        ;;
+      -h|--help) help_command new; return ;;
+      sdd|plan|tasks|feature)
+        [[ -z "$kind" ]] || { err "Tipo já definido: $kind"; exit 1; }
+        kind="$1"
+        shift
+        ;;
+      -*)
+        err "Opção desconhecida: $1"
+        exit 1
+        ;;
+      *)
+        if [[ -z "$name" ]]; then
+          name="$1"
+        elif [[ -d "$1" ]]; then
+          target="$1"
+        else
+          err "Argumento inesperado: $1"
+          exit 1
+        fi
+        shift
+        ;;
+    esac
+  done
+
+  case "$kind" in
+    sdd|plan|tasks|feature) ;;
+    "")
+      help_command new
+      return
+      ;;
+    *)
+      err "Tipo inválido. Use: cadeh new sdd|plan|tasks|feature <nome>"
+      exit 1
+      ;;
+  esac
+
+  if [[ -z "$name" ]]; then
+    err "Informe o nome. Ex: cadeh new feature minha-feature"
+    exit 1
+  fi
+
+  target="$(cd "${target}" && pwd)"
+  new_doc "$kind" "$name" "$target"
+}
+
+cmd_doctor() {
+  case "${1:-}" in
+    -h|--help) help_command doctor; return ;;
+  esac
+  doctor_check "${1:-.}"
+}
+
+cmd_setup() {
+  case "${1:-}" in
+    -h|--help) help_command setup; return ;;
+  esac
+
+  local bin_dir="${HOME}/.local/bin"
+  local link="${bin_dir}/harness"
+  local dest="${CADEH_ROOT}/bin/cadeh"
+
+  mkdir -p "$bin_dir"
+  ln -sf "$dest" "$link"
+  chmod +x "$dest"
+  ok "CLI instalado: $link → $dest"
+
+  if [[ ":${PATH}:" != *":${bin_dir}:"* ]]; then
+    warn "~/.local/bin não está no PATH"
+    echo ""
+    echo "Adicione ao ~/.zshrc ou ~/.bashrc:"
+    echo '  export PATH="$HOME/.local/bin:$PATH"'
+    echo ""
+    echo "Depois: source ~/.zshrc"
+  else
+    log "PATH ok — cadeh help"
+  fi
+}
+
+cmd_agents() {
+  echo "Agentes suportados pelo CADEH:"
+  echo ""
+  for agent in "${CADEH_AGENTS[@]}"; do
+    local label pad
+    label="$(agent_label "$agent")"
+    printf "  %-18s" "$label"
+    case "$agent" in
+      cursor)   echo "  .cursor/rules/ + commands     | alwaysApply .mdc" ;;
+      claude)   echo "  CLAUDE.md + .claude/commands/  | Claude Code" ;;
+      codex)    echo "  AGENTS.md + .codex/rules/      | OpenAI Codex" ;;
+      antigravity) echo "AGENTS.md + .github/copilot/   | VS Code-based" ;;
+      pi)       echo "  AGENTS.md + .pi/prompts/       | Pi Agent" ;;
+    esac
+  done
+  echo ""
+  echo "Uso: cadeh init --agent <nome>"
+  echo "     cadeh global --agent <nome>"
+}
+
+cmd_version() {
+  case "${1:-}" in
+    -h|--help) help_command version; return ;;
+  esac
+  echo "cadeh ${CADEH_VERSION}"
+  echo "root: ${CADEH_ROOT}"
+}
+
+main() {
+  local cmd="${1:-help}"
+  shift || true
+
+  case "$cmd" in
+    init) cmd_init "$@" ;;
+    install|i) cmd_install "$@" ;;
+    uninstall|remove|rm) cmd_uninstall "$@" ;;
+    global|g) cmd_global "$@" ;;
+    update|u) cmd_update "$@" ;;
+    new|n)
+      local sub="${1:-}"
+      shift || true
+      cmd_new "$sub" "$@"
+      ;;
+    doctor|d|check) cmd_doctor "$@" ;;
+    continue|cont|resume) cmd_continue "$@" ;;
+    status|st) cmd_status "$@" ;;
+    list|ls) cmd_list "$@" ;;
+    path|paths|root) cmd_path ;;
+    switch|sw) cmd_switch "$@" ;;
+    agents|agent-list) cmd_agents ;;
+    git) cmd_git "$@" ;;
+    codegraph|cg) cmd_codegraph "$@" ;;
+    tlc) cmd_tlc "$@" ;;
+    setup|self-install) cmd_setup "$@" ;;
+    version|-v|--version) cmd_version "$@" ;;
+    commands|cmds) cmd_commands_list ;;
+    help|h|-h|--help|"") cmd_help "$@" ;;
+    *)
+      err "Comando desconhecido: $cmd"
+      echo ""
+      log "Rode: cadeh help  ou  cadeh commands"
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"

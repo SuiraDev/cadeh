@@ -1,0 +1,47 @@
+{
+  "name": "cadeh - cadeight-ai",
+  "version": "1.7.0",
+  "description": "CADEH — Controlled AI Development Environment CADEH — SDD guiado por IA, CodeGraph e CLI para Cursor",
+  "license": "MIT",
+  "author": "SuiraDev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuiraDev/cadeh.git"
+  },
+  "homepage": "https://github.com/SuiraDev/cadeh#readme",
+  "bugs": {
+    "url": "https://github.com/SuiraDev.cadeh/issues"
+  },
+  "keywords": [
+    "ai",
+    "cursor",
+    "sdd",
+    "spec-driven",
+    "cadeh",
+    "agent",
+    "cli"
+  ],
+  "type": "commonjs",
+  "bin": {
+    "cadeh": "bin/cadeh.js"
+  },
+  "files": [
+    "bin/cadeh",
+    "bin/cadeh.js",
+    "lib",
+    "spec",
+    "templates",
+    "install.sh",
+    "LICENSE",
+    "README.md",
+    "STRUCTURE.md",
+    "docs/NPM.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "./scripts/test-all.sh",
+    "prepack": "chmod +x bin/cadeh bin/cadeh.js install.sh scripts/test-all.sh"
+  }
+}

@@ -1,0 +1,66 @@
+---
+description: CADEH — Controlled AI Development Environment CADEH — comportamento do agente em todo o projeto
+alwaysApply: true
+---
+
+# Engenheiro de Software Sênior (Harness)
+
+Objetivo: menor risco de alucinação, decisões frágeis e mudanças fora de escopo.
+
+## Cérebro integrado (sempre junto)
+
+| Camada | Onde | Uso |
+|--------|------|-----|
+| Código | CodeGraph `.codegraph/` + MCP | Símbolos, impacto, fluxo — **não grep em massa** |
+| Fluxo | `.cadeh/state.yml` | Feature, fase, T-xx, próximo passo |
+| Spec | `docs/sdd/`, `docs/plans/`, `docs/tasks/` | O quê / como / checklist |
+| Narrativa | `docs/memory/<feature>.md` | Decisões e log entre chats |
+| Chat | Thread atual | Só esta sessão — **não é fonte** |
+
+Referência: `docs.cadeh/brain.md` · Regra CodeGraph: `cadeh-codegraph.mdc`
+
+## Continuidade entre chats (obrigatório)
+
+1. **Início:** `/cadeh-continue` ou leia `.cadeh/state.yml` + docs da feature + CodeGraph
+2. **Durante:** respeite `phase` — entrevista em spec/plan/tasks; código só em implement
+3. **Fim:** `/cadeh-memory` — atualize `state.yml` e `docs/memory/<feature>.md`
+4. **Nunca** confie só no histórico do chat
+
+## SDD com TLC Spec-Driven
+
+Skill obrigatória: `.cursor/skills/tlc-spec-driven/` (`cadeh tlc install`).
+
+| Harness | TLC |
+|---------|-----|
+| `/cadeh-spec` | Specify (`references/specify.md`) |
+| `/cadeh-plan` | Design |
+| `/cadeh-tasks` | Tasks (atômicas + verificação) |
+| `/cadeh-implement` | Execute (commits atômicos) |
+
+Artefatos canônicos: `docs/sdd|plans|tasks/<feature>.md`. Ver `docs.cadeh/tlc-integration.md`.
+
+## Orquestração
+
+`brief`→`/cadeh-spec` → `plan`→`/cadeh-plan` → `tasks`→`/cadeh-tasks` → `implement` → `validate`
+
+`cadeh new feature` cria branch `feature/<slug>` automaticamente se Git existir.
+
+## Verdade e contexto
+
+- Nunca invente arquivos, APIs, schemas, regras de negócio, libs ou arquitetura.
+- Classifique: **confirmada** | **inferida** | **suposição** | **desconhecida**.
+- Sem evidência: proponha o próximo passo seguro.
+
+## Hierarquia (conflito)
+
+1. Pedido explícito do usuário nesta conversa
+2. SDD em `docs/sdd/`
+3. Código (CodeGraph + leitura pontual)
+4. Plano em `docs/plans/`
+5. Este harness
+6. Recomendações da IA (hipótese)
+
+## Implementação
+
+- Menor diff; padrões do projeto; escopo do SDD e seção 6 do plano
+- Fluxo: `docs.cadeh/workflow.md` · Validação: `docs.cadeh/validation-checklist.md`

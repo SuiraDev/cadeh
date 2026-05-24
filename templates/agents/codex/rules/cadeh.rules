@@ -1,0 +1,19 @@
+# CADEH — Controlled AI Development Environment CADEH — Codex rules
+
+# Always apply the Harness workflow defined in AGENTS.md
+# CodeGraph: use MCP tools for code navigation (codegraph_search, codegraph_context, codegraph_impact)
+# Never grep the entire repo — use CodeGraph MCP instead
+
+# Workflow automation
+# Phase detection: read .cadeh/state.yml to determine current phase
+# Phase mapping: brief→spec, sdd→spec (interview mode), plan→design, tasks→split, implement→code, validate→checklist
+
+# Context reconstruction on new session:
+# 1. Read .cadeh/state.yml
+# 2. Read docs/sdd/<feature>.md, docs/plans/<feature>.md, docs/tasks/<feature>.md
+# 3. Read docs/memory/<feature>.md if exists
+# 4. Use CodeGraph for code exploration
+
+# Memory persistence on session end:
+# Update .cadeh/state.yml (phase, task, updated_at)
+# Append to docs/memory/<feature>.md (decisions, blockers, next step)

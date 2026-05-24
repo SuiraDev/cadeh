@@ -1,0 +1,24 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+*.swp
+*.swo
+*~
+
+# Local / temp
+*.log
+.tmp/
+node_modules/
+*.tgz
+.npm/
+
+# Não versionar instalações de teste locais fora deste repo
+/test-projects/
+
+# Gerado ao rodar "cadeh install ." neste repo (fonte está na raiz + templates/)
+/docs/
+/.cursor/
+/AGENTS.md

@@ -1,0 +1,7 @@
+# Referência do estado (copiado para .cadeh/state.yml no projeto)
+feature: ""
+phase: ""       # brief | sdd | plan | tasks | implement | validate
+task: ""
+branch: ""
+updated_at: ""
+notes: ""

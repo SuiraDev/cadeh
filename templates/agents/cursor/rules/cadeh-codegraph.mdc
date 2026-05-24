@@ -1,0 +1,31 @@
+---
+description: CodeGraph — memória estrutural do código (MCP local)
+globs: "**/*"
+alwaysApply: true
+---
+
+# CodeGraph (memória de código)
+
+Este projeto usa **CodeGraph** (`.codegraph/`). Preferir ferramentas MCP em vez de varrer o repo com grep/read em massa.
+
+## Antes de explorar ou implementar
+
+| Situação | Ferramenta |
+|----------|------------|
+| Achar símbolo por nome | `codegraph_search` |
+| Contexto para tarefa/RF | `codegraph_context` |
+| Quem chama / quem é chamado | `codegraph_callers` / `codegraph_callees` |
+| Impacto de mudança | `codegraph_impact` |
+| Exploração ampla | `codegraph_explore` (evitar encher o chat principal) |
+
+## Se `.codegraph/` não existir
+
+Peça ao usuário: `cadeh codegraph install` ou `cadeh init`.
+
+## Fluxo CADEH
+
+- Estado SDD (feature, fase, T-xx): `.cadeh/state.yml`
+- Especificação: `docs/sdd/`, `docs/plans/`, `docs/tasks/`
+- Não invente arquivos — confirme com CodeGraph ou leitura pontual
+
+Referência: `docs.cadeh/codegraph.md`

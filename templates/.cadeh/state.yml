@@ -1,0 +1,8 @@
+# Estado do fluxo CADEH — máquina (complementa docs/memory e CodeGraph)
+# slug = arquivos em docs/sdd|plans|tasks|memory — phase: brief|sdd|plan|tasks|implement|validate
+feature: ""
+phase: ""
+task: ""
+branch: ""
+updated_at: ""
+notes: ""
