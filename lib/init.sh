@@ -96,7 +96,7 @@ cmd_init() {
   fi
 
   if cadeh_project_installed "$target" && [[ "$force" != "true" ]]; then
-    warn "Harness já instalado em: $target"
+    warn "CADEH já instalado em: $target"
     log "Use: cadeh update $target --agent $agent  ou  cadeh init $target -f --agent $agent"
     exit 1
   fi

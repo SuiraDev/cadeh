@@ -5,8 +5,8 @@
 **CADEH** é um CLI e conjunto de artefatos para desenvolvimento assistido por IA com baixo risco de alucinação, escopo claro e rastreabilidade de decisões. Funciona com **Cursor, Claude Code, OpenAI Codex, Antigravity e Pi Agent**.
 
 ```bash
-npx ai-suiradev-cadeh init               # instala no projeto (seleção interativa do agente)
-npx ai-suiradev-cadeh init --agent pi    # ou direto: cursor | claude | codex | antigravity | pi
+npx cadeh init               # instala no projeto (seleção interativa do agente)
+npx cadeh init --agent pi    # ou direto: cursor | claude | codex | antigravity | pi
 ```
 
 ---
@@ -36,14 +36,14 @@ O CADEH resolve o problema de agentes de IA que alucinam código, inventam APIs 
 
 ```bash
 cd /caminho/do/seu-app
-npx ai-suiradev-cadeh init
+npx cadeh init
 ```
 
 O CLI pergunta qual agente você usa (1-5). Depois instala tudo automaticamente.
 
 ```bash
 # Primeira feature
-npx ai-suiradev-cadeh new feature minha-feature
+npx cadeh new feature minha-feature
 ```
 
 ### Opção B — clone + setup

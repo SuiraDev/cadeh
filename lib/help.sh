@@ -65,6 +65,7 @@ Opções comuns
 Atalhos: i install · u update · g global · d doctor · n new · h help · st status · ls list
 
 Exemplos:
+  npx cadeh init
   cadeh init --agent pi
   cadeh init --agent cursor
   cadeh agents
@@ -107,6 +108,7 @@ cadeh init [path] [--agent <nome>] [--global] [--no-global] [-f]
   -f, --force       Reinstala scaffold
 
 Exemplos:
+  npx cadeh init
   cadeh init --agent pi
   cadeh init --agent claude
   cadeh init ~/workspace/legacy-app --no-global --agent codex

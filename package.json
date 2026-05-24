@@ -1,5 +1,5 @@
 {
-  "name": "cadeh - cadeight-ai",
+  "name": "cadeh",
   "version": "1.7.0",
   "description": "CADEH — Controlled AI Development Environment CADEH — SDD guiado por IA, CodeGraph e CLI para Cursor",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "homepage": "https://github.com/SuiraDev/cadeh#readme",
   "bugs": {
-    "url": "https://github.com/SuiraDev.cadeh/issues"
+    "url": "https://github.com/SuiraDev/cadeh/issues"
   },
   "keywords": [
     "ai",

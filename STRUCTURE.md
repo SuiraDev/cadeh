@@ -2,7 +2,7 @@
 
 ```
 cadeh/
-├── package.json           # npm / npx (ai-suiradev-cadeh)
+├── package.json           # npm / npx (cadeh)
 ├── bin/cadeh.js           # Entry point npm
 ├── README.md
 ├── LICENSE
