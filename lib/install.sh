@@ -14,7 +14,7 @@ _cadeh_merge_gitignore() {
 
   {
     echo ""
-    echo "# Harness / CodeGraph"
+    echo "# CADEH / CodeGraph"
     grep -v '^#' "$snippet" | grep -v '^$' || true
   } >> "$gitignore"
   log ".gitignore: .codegraph/"
@@ -153,7 +153,7 @@ install_project() {
   _install_cadeh_state "$target" "$force"
   _cadeh_merge_gitignore "$target"
 
-  cp -f "${spec}/harness.md" "${target}/docs/cadeh/cadeh.md"
+  cp -f "${spec}/cadeh.md" "${target}/docs/cadeh/cadeh.md"
   cp -f "${spec}/prompt.md" "${target}/docs/cadeh/prompt.md"
   cp -f "${spec}/validation-checklist.md" "${target}/docs/cadeh/validation-checklist.md"
   cp -f "${spec}/audit.md" "${target}/docs/cadeh/audit.md"
@@ -220,11 +220,11 @@ install_global() {
 # Detecta qual agente está instalado no projeto
 _detect_project_agent() {
   local target="$1"
-  if [[ -f "${target}/.cursor/rules/cadeh.mdc" ]]; then echo "cursor"; return 0; fi
+  if [[ -f "${target}/.cursor/rules/cadeh.mdc" ]] || [[ -f "${target}/.cursor/rules/harness.mdc" ]]; then echo "cursor"; return 0; fi
   if [[ -f "${target}/CLAUDE.md" ]]; then echo "claude"; return 0; fi
-  if [[ -f "${target}/.codex/rules/cadeh.rules" ]]; then echo "codex"; return 0; fi
+  if [[ -f "${target}/.codex/rules/cadeh.rules" ]] || [[ -f "${target}/.codex/rules/harness.rules" ]]; then echo "codex"; return 0; fi
   if [[ -f "${target}/.github/copilot-instructions.md" ]]; then echo "antigravity"; return 0; fi
-  if [[ -f "${target}/.pi/prompts/cadeh-continue.md" ]]; then echo "pi"; return 0; fi
+  if [[ -f "${target}/.pi/prompts/cadeh-continue.md" ]] || [[ -f "${target}/.pi/prompts/harness-continue.md" ]]; then echo "pi"; return 0; fi
   echo "cursor"  # default
 }
 

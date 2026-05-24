@@ -1,10 +1,10 @@
 ---
 description: Fluxo SDD e Implementation Plan ao editar especificações
-globs: docs/sdd/**,docs/plans/**,docs/tasks/**,docs.cadeh/**,.cadeh/**
+globs: docs/sdd/**,docs/plans/**,docs/tasks/**,docs/cadeh/**,.cadeh/**
 alwaysApply: false
 ---
 
-# Documentação de feature (Harness)
+# Documentação de feature (CADEH)
 
 Ao trabalhar nestes arquivos:
 
@@ -13,5 +13,5 @@ Ao trabalhar nestes arquivos:
 2. **Plan** (`docs/plans/`) deriva do SDD — liste arquivos impactados (seção 6) antes de codar.
 3. **Tasks** (`docs/tasks/`) quebra o plano em T-xx executáveis — atualize status por tarefa.
 4. Suposições de risco **Alto** bloqueiam implementação até validação.
-5. Comandos: `/cadeh-spec`, `/cadeh-plan`, `/cadeh-tasks`, `/cadeh-implement` · workflow: `docs.cadeh/workflow.md`
+5. Comandos: `/cadeh-spec`, `/cadeh-plan`, `/cadeh-tasks`, `/cadeh-implement` · workflow: `docs/cadeh/workflow.md`
 6. Git: `cadeh git status|branch|diff|commit|...`

@@ -28,4 +28,4 @@ Peça ao usuário: `cadeh codegraph install` ou `cadeh init`.
 - Especificação: `docs/sdd/`, `docs/plans/`, `docs/tasks/`
 - Não invente arquivos — confirme com CodeGraph ou leitura pontual
 
-Referência: `docs.cadeh/codegraph.md`
+Referência: `docs/cadeh/codegraph.md`

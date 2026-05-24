@@ -18,7 +18,7 @@ brief → sdd → plan → tasks → implement → validate
 - **Planejar:** derivar `docs/plans/<feature>.md`
 - **Tasks:** quebrar em `docs/tasks/<feature>.md`
 - **Implementar:** uma T-xx por vez, menor diff, commit atômico
-- **Validar:** checklist em `docs.cadeh/validation-checklist.md`
+- **Validar:** checklist em `docs/cadeh/validation-checklist.md`
 
 ## Memória entre chats
 
@@ -39,6 +39,6 @@ cadeh codegraph status
 
 ## Referência
 
-- `docs.cadeh/harness.md` — contrato completo
-- `docs.cadeh/workflow.md` — fluxo detalhado
-- `docs.cadeh/codegraph.md` — CodeGraph MCP
+- `docs/cadeh/cadeh.md` — contrato completo
+- `docs/cadeh/workflow.md` — fluxo detalhado
+- `docs/cadeh/codegraph.md` — CodeGraph MCP

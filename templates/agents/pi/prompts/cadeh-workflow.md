@@ -14,12 +14,12 @@ Brief → SDD → Plano → Tasks → Implementar → Validar, com **CodeGraph**
 | Spec | `docs/sdd/`, `docs/plans/`, `docs/tasks/` |
 | Narrativa | `docs/memory/<feature>.md` |
 
-Detalhes: `docs.cadeh/brain.md`
+Detalhes: `docs/cadeh/brain.md`
 
 ## Novo projeto / feature
 
 ```bash
-cadeh init                    # harness + CodeGraph + TLC skill
+cadeh init                    # CADEH + CodeGraph + TLC skill
 cadeh new feature <slug>      # docs + branch feature/<slug> + tasks com pré-requisitos
 ```
 

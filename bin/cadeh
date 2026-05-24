@@ -186,7 +186,7 @@ cmd_setup() {
   esac
 
   local bin_dir="${HOME}/.local/bin"
-  local link="${bin_dir}/harness"
+  local link="${bin_dir}/cadeh"
   local dest="${CADEH_ROOT}/bin/cadeh"
 
   mkdir -p "$bin_dir"

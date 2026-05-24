@@ -12,7 +12,7 @@ cmd_status() {
     [[ -z "$agent" ]] && agent="cursor"
   fi
 
-  echo "Harness v${CADEH_VERSION}"
+  echo "CADEH v${CADEH_VERSION}"
   echo ""
 
   # CLI

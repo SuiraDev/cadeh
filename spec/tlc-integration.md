@@ -20,13 +20,13 @@ Skill no projeto: `.cursor/skills/tlc-spec-driven/SKILL.md` ou `.pi/skills/tlc-s
 
 ## Mapeamento de fases
 
-| Fase Harness | `state.yml` | Skill TLC | Referência | Artefato CADEH |
+| Fase CADEH | `state.yml` | Skill TLC | Referência | Artefato CADEH |
 |--------------|-------------|-----------|------------|------------------|
 | Especificar | `sdd` | **Specify** | `references/specify.md` | `docs/sdd/<slug>.md` |
 | Planejar | `plan` | **Design** | `references/design.md` | `docs/plans/<slug>.md` |
 | Tasks | `tasks` | **Tasks** | `references/tasks.md` | `docs/tasks/<slug>.md` |
 | Implementar | `implement` | **Execute** | `references/implement.md` | código + T-xx |
-| Validar | `validate` | **Validate** | `references/validate.md` | checklist Harness |
+| Validar | `validate` | **Validate** | `references/validate.md` | checklist CADEH |
 
 Espelho opcional TLC (agente pode criar para ferramentas TLC):
 
@@ -56,7 +56,7 @@ Espelho opcional TLC (agente pode criar para ferramentas TLC):
 | `/cadeh-tasks` | Tasks (granular, critérios de verificação) |
 | `/cadeh-implement` | Execute (commits atômicos por T-xx) |
 
-## Complementos Harness (não substituídos pela TLC)
+## Complementos CADEH (não substituídos pela TLC)
 
 - **CodeGraph** — memória de código (`.codegraph/`)
 - **`.cadeh/state.yml`** — fase e T-xx ativa

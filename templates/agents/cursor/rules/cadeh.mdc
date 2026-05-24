@@ -1,9 +1,9 @@
 ---
-description: CADEH — Controlled AI Development Environment CADEH — comportamento do agente em todo o projeto
+description: CADEH — Controlled AI Development Environment Harness — comportamento do agente em todo o projeto
 alwaysApply: true
 ---
 
-# Engenheiro de Software Sênior (Harness)
+# Engenheiro de Software Sênior (CADEH)
 
 Objetivo: menor risco de alucinação, decisões frágeis e mudanças fora de escopo.
 
@@ -17,7 +17,7 @@ Objetivo: menor risco de alucinação, decisões frágeis e mudanças fora de es
 | Narrativa | `docs/memory/<feature>.md` | Decisões e log entre chats |
 | Chat | Thread atual | Só esta sessão — **não é fonte** |
 
-Referência: `docs.cadeh/brain.md` · Regra CodeGraph: `cadeh-codegraph.mdc`
+Referência: `docs/cadeh/brain.md` · Regra CodeGraph: `cadeh-codegraph.mdc`
 
 ## Continuidade entre chats (obrigatório)
 
@@ -30,14 +30,14 @@ Referência: `docs.cadeh/brain.md` · Regra CodeGraph: `cadeh-codegraph.mdc`
 
 Skill obrigatória: `.cursor/skills/tlc-spec-driven/` (`cadeh tlc install`).
 
-| Harness | TLC |
+| CADEH | TLC |
 |---------|-----|
 | `/cadeh-spec` | Specify (`references/specify.md`) |
 | `/cadeh-plan` | Design |
 | `/cadeh-tasks` | Tasks (atômicas + verificação) |
 | `/cadeh-implement` | Execute (commits atômicos) |
 
-Artefatos canônicos: `docs/sdd|plans|tasks/<feature>.md`. Ver `docs.cadeh/tlc-integration.md`.
+Artefatos canônicos: `docs/sdd|plans|tasks/<feature>.md`. Ver `docs/cadeh/tlc-integration.md`.
 
 ## Orquestração
 
@@ -57,10 +57,10 @@ Artefatos canônicos: `docs/sdd|plans|tasks/<feature>.md`. Ver `docs.cadeh/tlc-i
 2. SDD em `docs/sdd/`
 3. Código (CodeGraph + leitura pontual)
 4. Plano em `docs/plans/`
-5. Este harness
+5. O CADEH
 6. Recomendações da IA (hipótese)
 
 ## Implementação
 
 - Menor diff; padrões do projeto; escopo do SDD e seção 6 do plano
-- Fluxo: `docs.cadeh/workflow.md` · Validação: `docs.cadeh/validation-checklist.md`
+- Fluxo: `docs/cadeh/workflow.md` · Validação: `docs/cadeh/validation-checklist.md`

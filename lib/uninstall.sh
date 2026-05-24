@@ -7,6 +7,7 @@ uninstall_global() {
 
   case "$agent" in
     cursor)
+      rm -f "${HOME}/.cursor/rules/harness.mdc" 2>/dev/null || true
       path="${HOME}/.cursor/rules/cadeh.mdc"
       ;;
     claude)
@@ -85,8 +86,12 @@ uninstall_project() {
       rm -f "${target}/.cursor/rules/cadeh.mdc"
       rm -f "${target}/.cursor/rules/cadeh-feature-docs.mdc"
       rm -f "${target}/.cursor/rules/cadeh-codegraph.mdc"
+      rm -f "${target}/.cursor/rules/harness.mdc"
+      rm -f "${target}/.cursor/rules/harness-feature-docs.mdc"
+      rm -f "${target}/.cursor/rules/harness-codegraph.mdc"
       rm -f "${target}/.cursor/rules/codegraph.mdc" 2>/dev/null || true
       rm -f "${target}/.cursor/commands"/cadeh-*.md 2>/dev/null || true
+      rm -f "${target}/.cursor/commands"/harness-*.md 2>/dev/null || true
       log "Rules e commands Cursor removidos"
       # Cleanup empty dirs
       for d in "${target}/.cursor/commands" "${target}/.cursor/rules" "${target}/.cursor"; do
@@ -103,9 +108,11 @@ uninstall_project() {
         warn "CLAUDE.md mantido — use --force para remover"
       fi
       rm -f "${target}/.claude/commands"/cadeh-*.md 2>/dev/null || true
+      rm -f "${target}/.claude/commands"/harness-*.md 2>/dev/null || true
       ;;
     codex)
       rm -f "${target}/.codex/rules/cadeh.rules"
+      rm -f "${target}/.codex/rules/harness.rules"
       log "Rules Codex removidas"
       ;;
     antigravity)
@@ -114,6 +121,7 @@ uninstall_project() {
       ;;
     pi)
       rm -f "${target}/.pi/prompts"/cadeh-*.md 2>/dev/null || true
+      rm -f "${target}/.pi/prompts"/harness-*.md 2>/dev/null || true
       rm -f "${target}/.pi/APPEND_SYSTEM.md" 2>/dev/null || true
       if [[ "$force" == "true" ]]; then
         rm -f "${target}/.pi/settings.json" 2>/dev/null || true

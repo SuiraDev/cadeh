@@ -37,7 +37,7 @@ Identifique **padrões recorrentes** no código:
 
 ### 3. Preenchimento do template
 
-Preencha `docs/CONTEXT.md` usando o template `docs.cadeh/context.md`.
+Preencha `docs/CONTEXT.md` usando o template `docs/cadeh/context.md`.
 
 **Regras:**
 - Preencha **todas** as seções aplicáveis

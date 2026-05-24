@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Wrappers Git para projetos com Harness
+# Wrappers Git para projetos com CADEH
 
 _git_target() {
   local target="${1:-.}"

@@ -1,4 +1,4 @@
-# Prompt mestre — SDD + Harness
+# Prompt mestre — SDD + CADEH
 
 > **Papel:** bloco para colar no início de cada pedido de implementação ao agente.  
 > **Anexar:** SDD preenchido; opcionalmente Implementation Plan.  

@@ -2,7 +2,7 @@
 
 > **Papel:** quebrar o plano em tarefas rastreáveis para o agente implementar em sessões.  
 > **Entrada:** [implementation-plan.md](./implementation-plan.md) aprovado.  
-> **Próximo passo:** implementar tarefa a tarefa com `docs.cadeh/prompt.md` ou comando `/cadeh-implement`.
+> **Próximo passo:** implementar tarefa a tarefa com `docs/cadeh/prompt.md` ou comando `/cadeh-implement`.
 
 **Feature / ID:** `[mesmo ID do SDD]`  
 **SDD:** `docs/sdd/<feature>.md`  

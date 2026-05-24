@@ -1,6 +1,6 @@
 # CADEH — Controlled AI Development Environment CADEH — Codex rules
 
-# Always apply the Harness workflow defined in AGENTS.md
+# Always apply the CADEH workflow defined in AGENTS.md
 # CodeGraph: use MCP tools for code navigation (codegraph_search, codegraph_context, codegraph_impact)
 # Never grep the entire repo — use CodeGraph MCP instead
 

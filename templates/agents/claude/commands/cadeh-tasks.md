@@ -16,7 +16,7 @@ Quebre o plano em T-xx **atômicas** com critérios de verificação (TLC Tasks)
 
 ## Estrutura obrigatória do arquivo
 
-**Não remova** estas seções do template Harness:
+**Não remova** estas seções do template CADEH:
 
 1. **Resumo** (objetivo, branch `feature/<slug>`)
 2. **Pré-requisitos** — todos marcados `[x]` antes de implementar:

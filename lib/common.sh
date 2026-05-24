@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Biblioteca compartilhada do CLI Harness
+# Biblioteca compartilhada do CLI CADEH
 
 cadeh_resolve_root() {
   local script="${BASH_SOURCE[1]:-${BASH_SOURCE[0]}}"

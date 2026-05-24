@@ -21,7 +21,7 @@ Este projeto usa o **CADEH — Controlled AI Development Environment Harness** c
 
 **Antes de qualquer código, leia `docs/CONTEXT.md`.** Para criar/atualizar: `/cadeh-context`.
 
-Detalhes: `docs.cadeh/brain.md`
+Detalhes: `docs/cadeh/brain.md`
 
 ## Workflow (fases)
 
@@ -33,7 +33,7 @@ brief → sdd → plan → tasks → implement → validate
 - **Planejar** — derivar plano em `docs/plans/<feature>.md` (arquivos, passos)
 - **Tasks** — quebrar em T-xx atômicas em `docs/tasks/<feature>.md`
 - **Implementar** — uma T-xx por vez, menor diff, commit atômico
-- **Validar** — checklist em `docs.cadeh/validation-checklist.md`
+- **Validar** — checklist em `docs/cadeh/validation-checklist.md`
 
 ## Verdade e contexto
 
@@ -75,13 +75,13 @@ cadeh doctor                # diagnóstico
 
 Execute `/cadeh-audit` para uma auditoria completa de conformidade LGPD e vulnerabilidades. O agente percorrerá sistematicamente 70+ itens de verificação com evidências do código.
 
-Template: `docs.cadeh/audit.md`
+Template: `docs/cadeh/audit.md`
 
 ## Referência
 
-- `docs.cadeh/harness.md` — contrato completo
-- `docs.cadeh/brain.md` — arquitetura da memória
-- `docs.cadeh/workflow.md` — fluxo SDD
-- `docs.cadeh/codegraph.md` — CodeGraph MCP
-- `docs.cadeh/validation-checklist.md` — validação pós-implementação
-- `docs.cadeh/audit.md` — auditoria LGPD + segurança
+- `docs/cadeh/cadeh.md` — contrato completo
+- `docs/cadeh/brain.md` — arquitetura da memória
+- `docs/cadeh/workflow.md` — fluxo SDD
+- `docs/cadeh/codegraph.md` — CodeGraph MCP
+- `docs/cadeh/validation-checklist.md` — validação pós-implementação
+- `docs/cadeh/audit.md` — auditoria LGPD + segurança

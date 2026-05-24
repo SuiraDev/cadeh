@@ -1,7 +1,7 @@
 # CADEH — Controlled AI Development Environment Harness
 
 > **Papel:** contrato normativo — define *como* a IA deve trabalhar.  
-> **Repo:** fonte em `spec/` — no projeto: `docs.cadeh/cadeh.md`  
+> **Repo:** fonte em `spec/` — no projeto: `docs/cadeh/cadeh.md`  
 > **Operacional:** [cadeh.md](./cadeh.md) · **Fluxo:** [sdd.md](./sdd.md) → [implementation-plan.md](./implementation-plan.md) → código → [validation-checklist.md](./validation-checklist.md)
 
 ## 1. Objetivo
@@ -178,7 +178,7 @@ Não aceitar passivamente solução ruim. Se a solicitação prejudicar qualidad
 | [workflow.md](./workflow.md) | Fluxo e comandos `/cadeh-*` |
 | `.cadeh/state.yml` | Estado do fluxo (feature, fase, T-xx) |
 | `docs/memory/<feature>.md` | Memória narrativa (decisões, log de sessão) |
-| [prompt.md](./prompt.md) | Encadeia Harness + SDD (+ plano) em cada pedido |
+| [prompt.md](./prompt.md) | Encadeia CADEH + SDD (+ plano) em cada pedido |
 | [validation-checklist.md](./validation-checklist.md) | Auditoria pós-implementação |
 
 A IA não deve contradizer o SDD sem explicitar o conflito e pedir decisão do usuário.

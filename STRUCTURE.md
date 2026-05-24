@@ -24,7 +24,7 @@ cadeh/
 │   └── state.sh           # Estado (.cadeh/state.yml) + continue + memory
 │
 ├── spec/                  # Fontes Markdown (canônicas)
-│   ├── harness.md         # Contrato normativo da IA
+│   ├── cadeh.md           # Contrato normativo da IA
 │   ├── persona.md         # Persona resumida
 │   ├── persona.user-rule.md
 │   ├── workflow.md        # Fluxo SDD guiado por IA

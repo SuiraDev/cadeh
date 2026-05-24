@@ -139,7 +139,7 @@ run "global restore" cadeh global
 run "install.sh" "$CADEH_REPO/install.sh" version
 run_fail "comando inválido" cadeh foo
 run_fail "help inválido" cadeh help foo
-run_fail "install dir inexistente" cadeh install /tmp/nao-existe-harness-xyz
+run_fail "install dir inexistente" cadeh install /tmp/nao-existe-cadeh-xyz
 
 # --- git (repo temporário) ---
 GIT_TEST="${TEST_ROOT}/git-test"

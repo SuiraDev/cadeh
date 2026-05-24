@@ -69,6 +69,78 @@ cadeh init      # instala no projeto atual
 
 ---
 
+## Desinstalação
+
+### Remover o CADEH de um projeto
+
+Por padrão o comando **mantém** o que você criou (`docs/sdd/`, `docs/plans/`, `docs/tasks/`, `docs/memory/`, `docs/CONTEXT.md`) e remove só o scaffold do CADEH (rules, commands, templates, `docs/cadeh/`, `.cadeh/state.yml`).
+
+```bash
+cd /caminho/do/seu-app
+
+# Remoção padrão (preserva suas specs e memória)
+cadeh uninstall .
+# ou via npx, sem instalar globalmente:
+npx cadeh uninstall .
+
+# Agente específico (se não detectar sozinho)
+cadeh uninstall . --agent pi
+
+# Remover também CodeGraph (.codegraph/ + MCP do agente)
+cadeh uninstall . --codegraph
+
+# Remover regra global do agente (além do projeto)
+cadeh uninstall . --global
+
+# Apagar toda a pasta docs/ (inclui SDDs, planos e memória que você criou)
+cadeh uninstall . --purge
+
+# Forçar remoção de AGENTS.md / CLAUDE.md mesmo se editados
+cadeh uninstall . -f
+```
+
+Combinações comuns:
+
+```bash
+# Saída limpa do projeto + CodeGraph + regra global
+cadeh uninstall . --codegraph --global
+
+# Reset total da documentação do projeto
+cadeh uninstall . --purge --codegraph -f
+```
+
+### Remover o CLI do sistema
+
+Depende de como você instalou:
+
+**Instalação global via npm:**
+
+```bash
+npm uninstall -g cadeh
+```
+
+**Instalação local com `cadeh setup` (symlink no clone):**
+
+```bash
+rm -f ~/.local/bin/cadeh
+```
+
+Se você ainda tiver o symlink antigo do rename (`harness`):
+
+```bash
+rm -f ~/.local/bin/harness
+```
+
+**Clone do repositório:** apagar a pasta do repo é opcional; o CLI some ao remover o symlink ou o pacote npm global.
+
+Confirme que não há mais `cadeh` no PATH:
+
+```bash
+which cadeh   # deve não retornar nada após desinstalar
+```
+
+---
+
 ## Uso rápido
 
 ```bash
@@ -222,6 +294,7 @@ seu-projeto/
 | `cadeh git commit -m "msg"` | Commit com mensagem |
 | `cadeh git diff/log/add/stash` | Demais wrappers Git |
 | `cadeh setup` | Instala symlink em `~/.local/bin` |
+| `cadeh uninstall [path]` | Remove CADEH do projeto (`--purge`, `--codegraph`, `-g`) |
 | `cadeh version` | Versão do CLI |
 | `cadeh help` | Ajuda geral |
 

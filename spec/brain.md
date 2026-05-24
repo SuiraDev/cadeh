@@ -105,7 +105,7 @@ cadeh new feature minha-feature   # + branch feature/<slug> + tasks com pré-req
 cadeh continue
 ```
 
-SDD: processo **[tlc-spec-driven](https://github.com/tech-leads-club/agent-skills)** — ver `docs.cadeh/tlc-integration.md`.
+SDD: processo **[tlc-spec-driven](https://github.com/tech-leads-club/agent-skills)** — ver `docs/cadeh/tlc-integration.md`.
 
 No agente: `/cadeh-workflow` para o mapa completo.
 
@@ -115,5 +115,5 @@ No agente: `/cadeh-workflow` para o mapa completo.
 2. SDD da feature
 3. Código (**CodeGraph** + leitura pontual)
 4. Implementation Plan
-5. Harness (persona + este documento)
+5. CADEH (persona + este documento)
 6. Hipóteses da IA (sempre rotuladas)

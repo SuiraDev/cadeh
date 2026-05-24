@@ -49,9 +49,9 @@ cadeh codegraph index .
 ## Desinstalar
 
 ```bash
-# Só Harness (mantém .codegraph/)
+# Só CADEH (mantém .codegraph/)
 cadeh uninstall .
 
-# Harness + CodeGraph (índice + MCP local)
+# CADEH + CodeGraph (índice + MCP local)
 cadeh uninstall . --codegraph
 ```

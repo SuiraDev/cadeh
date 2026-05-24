@@ -30,7 +30,7 @@ Se `.codegraph/` ausente: peça `cadeh codegraph install`.
 | `plan` | Derivar plano (CodeGraph na seção 6) | `/cadeh-plan` → `/cadeh-tasks` |
 | `tasks` | Quebrar T-xx | `/cadeh-tasks` → `/cadeh-implement` |
 | `implement` | Uma T-xx | `/cadeh-implement` |
-| `validate` | Checklist | `docs.cadeh/validation-checklist.md` |
+| `validate` | Checklist | `docs/cadeh/validation-checklist.md` |
 
 ## Resumir (máx. 10 linhas)
 

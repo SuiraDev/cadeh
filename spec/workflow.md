@@ -1,4 +1,4 @@
-# Harness Workflow — SDD guiado por IA
+# Fluxo CADEH — SDD guiado por IA
 
 > Fluxo com **cérebro integrado**: CodeGraph + estado + spec + memória narrativa.  
 > Arquitetura: [brain.md](./brain.md)
@@ -31,7 +31,7 @@ cadeh continue
 
 No agente: `/cadeh-continue` → `/cadeh-spec`
 
-`cadeh init` instala Harness **e** CodeGraph.
+`cadeh init` instala CADEH **e** CodeGraph.
 
 ## Troca de chat (nunca perder contexto)
 

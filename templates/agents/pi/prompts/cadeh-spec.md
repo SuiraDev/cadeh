@@ -49,4 +49,4 @@ Use o template em `docs/sdd/_template.md` como índice; corpo segue **specify.md
 - `/cadeh-memory`
 - Sugira: **`/cadeh-plan`**
 
-Referência: `docs.cadeh/tlc-integration.md`
+Referência: `docs/cadeh/tlc-integration.md`

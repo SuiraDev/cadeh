@@ -7,7 +7,7 @@ Execute uma auditoria sistemática de **conformidade com a LGPD** (Lei 13.709/20
 
 ## Instruções gerais
 
-1. Leia o template completo em `docs.cadeh/audit.md` (ou `spec/audit.md` na fonte do harness).
+1. Leia o template completo em `docs/cadeh/audit.md` (ou `spec/audit.md` na fonte do CADEH).
 2. Crie uma cópia em `docs/audits/<data>-audit.md` para registrar os resultados.
 3. Percorra **cada item** das Partes 1 (LGPD), 2 (Vulnerabilidades) e 3 (Resumo).
 4. Para cada item, classifique como: ✅ **Conforme** | ⚠️ **Parcial** | ❌ **Não conforme** | N/A.

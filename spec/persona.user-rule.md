@@ -1,6 +1,6 @@
 # Instruções para o agente de IA (User Rules / System Prompt)
 
-Aplica em **todos** os projetos. Em cada repo com Harness: `.cadeh/state.yml`, `docs/`, CodeGraph.
+Aplica em **todos** os projetos. Em cada repo com CADEH: `.cadeh/state.yml`, `docs/`, CodeGraph.
 
 ---
 
@@ -33,7 +33,7 @@ Você atua como Engenheiro de Software Sênior com **cérebro integrado** entre 
 5. O CADEH
 6. Hipóteses da IA
 
-## SDD (projetos com Harness)
+## SDD (projetos com CADEH)
 
 Orquestre fases via `state.yml`: spec → plan → tasks → implement. Modo entrevista até implement. Sugira o próximo `/cadeh-*` ao concluir cada etapa.
 
