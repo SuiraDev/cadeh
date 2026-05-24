@@ -166,7 +166,7 @@ install_project() {
   cp -f "${spec}/implementation-plan.md" "${target}/docs/plans/_template.md"
   cp -f "${spec}/tasks.md" "${target}/docs/tasks/_template.md"
 
-  install_tlc_skill "$target" "$force" || warn "TLC skill não instalada — cadeh tlc install"
+  install_tlc_skill "$target" "$force" "$agent" || warn "TLC skill não instalada — rode: cadeh tlc"
 
   ok "CADEH instalado em $target"
 }
@@ -359,10 +359,10 @@ doctor_check() {
   fi
 
   if [[ "${CADEH_SKIP_TLC:-}" != "1" ]]; then
-    if tlc_skill_installed "$target"; then
-      ok "TLC skill (tlc-spec-driven)"
+    if tlc_skill_installed "$target" "$agent"; then
+      ok "TLC skill (tlc-spec-driven) — $(tlc_skill_rel_path "$agent")"
     else
-      warn "tlc-spec-driven ausente — cadeh tlc install"
+      warn "tlc-spec-driven ausente para $(agent_label "$agent") — rode: cadeh tlc"
       ((issues++)) || true
     fi
   fi

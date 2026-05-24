@@ -258,7 +258,7 @@ main() {
     agents|agent-list) cmd_agents ;;
     git) cmd_git "$@" ;;
     codegraph|cg) cmd_codegraph "$@" ;;
-    tlc) cmd_tlc "$@" ;;
+    tlc|tcl) cmd_tlc "$@" ;;
     setup|self-install) cmd_setup "$@" ;;
     version|-v|--version) cmd_version "$@" ;;
     commands|cmds) cmd_commands_list ;;
@@ -266,6 +266,9 @@ main() {
     *)
       err "Comando desconhecido: $cmd"
       echo ""
+      if [[ "$cmd" == "tcl" ]]; then
+        log "Você quis dizer: cadeh tlc  (Tech Leads Club Spec-Driven)"
+      fi
       log "Rode: cadeh help  ou  cadeh commands"
       exit 1
       ;;

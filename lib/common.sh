@@ -140,6 +140,64 @@ agent_has_commands() {
   esac
 }
 
+# Mapeia agente CADEH → flag -a do @tech-leads-club/agent-skills
+tlc_agent_skills_cli() {
+  case "$1" in
+    cursor) echo "cursor" ;;
+    claude) echo "claude-code" ;;
+    codex) echo "codex" ;;
+    antigravity) echo "antigravity" ;;
+    pi) echo "cursor" ;;  # Pi não tem target próprio — instala + espelha em .pi/skills/
+    *) echo "cursor" ;;
+  esac
+}
+
+# Caminho relativo do SKILL.md por agente
+tlc_skill_rel_path() {
+  case "$1" in
+    cursor) echo ".cursor/skills/tlc-spec-driven/SKILL.md" ;;
+    claude) echo ".claude/skills/tlc-spec-driven/SKILL.md" ;;
+    codex) echo ".codex/skills/tlc-spec-driven/SKILL.md" ;;
+    antigravity) echo ".agent/skills/tlc-spec-driven/SKILL.md" ;;
+    pi) echo ".pi/skills/tlc-spec-driven/SKILL.md" ;;
+    *) echo ".cursor/skills/tlc-spec-driven/SKILL.md" ;;
+  esac
+}
+
+tlc_skill_installed() {
+  local target="$1"
+  local agent="${2:-cursor}"
+  local rel
+  rel="$(tlc_skill_rel_path "$agent")"
+  if [[ -f "${target}/${rel}" ]]; then
+    return 0
+  fi
+  # Pi: aceita cópia só em .cursor (instalações antigas)
+  if [[ "$agent" == "pi" ]] && [[ -f "${target}/.cursor/skills/tlc-spec-driven/SKILL.md" ]]; then
+    return 0
+  fi
+  return 1
+}
+
+# Pergunta s/n (default: n). Retorna 0 = sim.
+prompt_yes_no() {
+  local prompt="${1:-Continuar?}"
+  local default_no="${2:-true}"
+  local answer
+
+  if [[ ! -t 0 ]]; then
+    return 1
+  fi
+
+  if [[ "$default_no" == "true" ]]; then
+    read -r -p "  ${prompt} [s/N]: " answer
+    [[ "${answer,,}" == "s" || "${answer,,}" == "sim" || "${answer,,}" == "y" || "${answer,,}" == "yes" ]]
+  else
+    read -r -p "  ${prompt} [S/n]: " answer
+    [[ -z "$answer" || "${answer,,}" == "s" || "${answer,,}" == "sim" || "${answer,,}" == "y" || "${answer,,}" == "yes" ]]
+  fi
+}
+
 # Prompt interativo para selecionar agente
 prompt_agent_selection() {
   echo ""

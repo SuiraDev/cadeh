@@ -5,10 +5,14 @@ O CADEH usa a skill **[tlc-spec-driven](https://github.com/tech-leads-club/agent
 ## Instalação
 
 ```bash
-cadeh init          # instala skill automaticamente
-cadeh tlc install   # reinstalar ou após cadeh install --skip-tlc
+cadeh init              # instala skill para o agente escolhido
+cadeh tlc               # menu interativo (instalar / status / reinstalar)
+cadeh tlc install       # reinstalar ou após --skip-tlc
+cadeh tlc install --agent pi
 cadeh tlc status
 ```
+
+Alias: `cadeh tcl` → `cadeh tlc` (typo comum).
 
 Comando direto (equivalente):
 
@@ -16,7 +20,15 @@ Comando direto (equivalente):
 npx @tech-leads-club/agent-skills install --skill tlc-spec-driven
 ```
 
-Skill no projeto: `.cursor/skills/tlc-spec-driven/SKILL.md` ou `.pi/skills/tlc-spec-driven/SKILL.md`
+Skill no projeto (por agente):
+
+| Agente | Path |
+|--------|------|
+| Cursor | `.cursor/skills/tlc-spec-driven/SKILL.md` |
+| Claude Code | `.claude/skills/tlc-spec-driven/SKILL.md` |
+| Codex | `.codex/skills/tlc-spec-driven/SKILL.md` |
+| Antigravity | `.agent/skills/tlc-spec-driven/SKILL.md` |
+| Pi Agent | `.pi/skills/tlc-spec-driven/SKILL.md` (espelhada após install) |
 
 ## Mapeamento de fases
 

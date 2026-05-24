@@ -27,8 +27,9 @@ Documentação
   new tasks <nome>      Cria docs/tasks/<nome>.md
   new feature <nome>    Cria sdd + plan + tasks + memory + state
   continue [path]       Resumo do fluxo e comando sugerido
-  tlc install [path]    Instala skill tlc-spec-driven
-  tlc status [path]     Verifica skill TLC
+  tlc [install|status]  Skill tlc-spec-driven (menu interativo sem args)
+  tlc install [path]    Instala skill para o agente do projeto
+  tlc status [path]       Verifica skill TLC
 
 CodeGraph (memória de código)
   codegraph install     Configura MCP + index no projeto
@@ -302,19 +303,29 @@ EOF
       ;;
     tlc)
       cat <<'EOF'
-cadeh tlc <install|status> [path] [-f]
+cadeh tlc [install|status] [path] [--agent <nome>] [-f]
 
   Skill Tech Leads Club: tlc-spec-driven (Specify → Design → Tasks → Execute).
-  Instalada em: .cursor/skills/tlc-spec-driven/
+  Sem subcomando: menu interativo (TTY).
 
-  install [path]   npx @tech-leads-club/agent-skills install -s tlc-spec-driven -a cursor
-  status [path]    Verifica SKILL.md
+  install [path]   Instala para o agente do projeto (ou --agent)
+  status [path]    Verifica SKILL.md; oferece instalar se ausente
+  -f, --force      Reinstala (bypass cache)
 
-  Também roda em: cadeh init (use --skip-tlc para pular)
+  Paths por agente:
+    cursor      .cursor/skills/tlc-spec-driven/
+    claude      .claude/skills/tlc-spec-driven/
+    codex       .codex/skills/tlc-spec-driven/
+    antigravity .agent/skills/tlc-spec-driven/
+    pi          .pi/skills/ (+ espelho a partir do pacote Cursor)
 
-Exemplo:
-  cadeh tlc install .
-  cadeh tlc status
+  Também em: cadeh init · após cadeh switch (menu se faltar)
+  Alias: cadeh tcl → tlc
+
+Exemplos:
+  cadeh tlc
+  cadeh tlc install --agent pi
+  cadeh tlc status .
 EOF
       ;;
     codegraph|cg)

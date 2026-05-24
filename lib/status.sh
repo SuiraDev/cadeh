@@ -269,6 +269,7 @@ cmd_switch() {
   ok "Agente trocado: $(agent_label "$current_agent") → $(agent_label "$new_agent")"
   log "Docs, estado e memória preservados"
   echo ""
+  _offer_tlc_install_if_missing "$target" "$new_agent" || true
   doctor_check "$target" "$new_agent" || true
 }
 

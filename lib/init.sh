@@ -110,10 +110,6 @@ cmd_init() {
     install_codegraph_project "$target" "false" "$agent" || warn "CodeGraph falhou — rode: cadeh codegraph install"
   fi
 
-  if [[ "$skip_tlc" != "true" ]]; then
-    install_tlc_skill "$target" "$force" || warn "TLC skill falhou — rode: cadeh tlc install"
-  fi
-
   if [[ "$skip_global" != "true" ]]; then
     local global_path
     global_path="$(agent_global_path "$agent")"
