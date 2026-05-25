@@ -1,33 +1,35 @@
 # shellcheck shell=bash
-# Tech Leads Club — tlc-spec-driven (instalação no projeto)
+# Tech Leads Club — tlc-spec-driven (cópia local do pacote CADEH)
 
-_tlc_mirror_for_pi() {
+_tlc_vendor_dir() {
+  echo "${CADEH_ROOT}/vendor/tlc-spec-driven"
+}
+
+_copy_tlc_skill_from_vendor() {
   local target="$1"
-  local force="${2:-false}"
-  local src="${target}/.cursor/skills/tlc-spec-driven"
-  local dest="${target}/.pi/skills/tlc-spec-driven"
+  local agent="$2"
+  local force="${3:-false}"
+  local vendor rel dest
 
-  [[ -d "$src" ]] || return 1
+  vendor="$(_tlc_vendor_dir)"
+  rel="$(tlc_skill_dest_dir "$agent")"
+  dest="${target}/${rel}"
+
+  if [[ ! -f "${vendor}/SKILL.md" ]]; then
+    warn "Skill TLC não encontrada no pacote CADEH: ${vendor}/SKILL.md"
+    warn "Reinstale o CLI ou atualize o repositório harness"
+    return 1
+  fi
 
   if [[ -d "$dest" ]] && [[ "$force" != "true" ]]; then
     return 0
   fi
 
-  mkdir -p "${target}/.pi/skills"
+  mkdir -p "$(dirname "$dest")"
   rm -rf "$dest"
-  cp -a "$src" "$dest"
-  ok "TLC skill (Pi): .pi/skills/tlc-spec-driven/"
+  cp -a "$vendor" "$dest"
+  ok "TLC skill: ${rel}/"
   return 0
-}
-
-_tlc_post_install() {
-  local target="$1"
-  local agent="$2"
-  local force="${3:-false}"
-
-  if [[ "$agent" == "pi" ]]; then
-    _tlc_mirror_for_pi "$target" "$force" || warn "Espelho Pi ausente — reinstale: cadeh tlc install --agent pi -f"
-  fi
 }
 
 install_tlc_skill() {
@@ -48,29 +50,15 @@ install_tlc_skill() {
 
   if tlc_skill_installed "$target" "$agent" && [[ "$force" != "true" ]]; then
     log "TLC skill já instalada: $(tlc_skill_rel_path "$agent")"
-    if [[ "$agent" == "pi" ]] && [[ ! -f "${target}/.pi/skills/tlc-spec-driven/SKILL.md" ]]; then
-      _tlc_mirror_for_pi "$target" "true"
-    fi
     return 0
   fi
-
-  if ! command -v npx >/dev/null 2>&1; then
-    warn "npx ausente — TLC skill não instalada"
-    warn "Requer Node.js 18+ — depois: cadeh tlc install"
-    return 1
-  fi
-
-  local tlc_cli
-  tlc_cli="$(tlc_agent_skills_cli "$agent")"
 
   log "Instalando tlc-spec-driven para $(agent_label "$agent")..."
-  if (cd "$target" && npx -y @tech-leads-club/agent-skills install -s tlc-spec-driven -a "$tlc_cli" ${force:+-f}); then
-    ok "TLC skill: $(tlc_skill_rel_path "$agent" | sed 's|/SKILL.md||')"
-    _tlc_post_install "$target" "$agent" "$force"
+  if _copy_tlc_skill_from_vendor "$target" "$agent" "$force"; then
     return 0
   fi
 
-  warn "Falha ao instalar tlc-spec-driven (agente: $tlc_cli)"
+  warn "Falha ao instalar tlc-spec-driven para $(agent_label "$agent")"
   return 1
 }
 
@@ -132,7 +120,7 @@ _cmd_tlc_interactive() {
   echo ""
   echo "  1) Instalar skill tlc-spec-driven"
   echo "  2) Verificar status"
-  echo "  3) Reinstalar (forçar download)"
+  echo "  3) Reinstalar (forçar cópia do pacote)"
   echo "  4) Trocar agente alvo"
   echo "  5) Sair"
   echo ""

@@ -310,14 +310,16 @@ cadeh tlc [install|status] [path] [--agent <nome>] [-f]
 
   install [path]   Instala para o agente do projeto (ou --agent)
   status [path]    Verifica SKILL.md; oferece instalar se ausente
-  -f, --force      Reinstala (bypass cache)
+  -f, --force      Reinstala (cópia forçada do vendor/)
+
+  Origem: vendor/tlc-spec-driven/ no pacote CADEH (sem npx)
 
   Paths por agente:
     cursor      .cursor/skills/tlc-spec-driven/
     claude      .claude/skills/tlc-spec-driven/
     codex       .codex/skills/tlc-spec-driven/
     antigravity .agent/skills/tlc-spec-driven/
-    pi          .pi/skills/ (+ espelho a partir do pacote Cursor)
+    pi          .pi/skills/tlc-spec-driven/
 
   Também em: cadeh init · após cadeh switch (menu se faltar)
   Alias: cadeh tcl → tlc

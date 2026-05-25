@@ -8,16 +8,39 @@ _cadeh_state_get() {
   grep -E "^${key}:" "$state" 2>/dev/null | head -1 | sed -E 's/[[:space:]]#.*$//; s/^[^:]*:[[:space:]]*"?//; s/"?[[:space:]]*$//; s/^"|"$//g'
 }
 
+_cadeh_cmd_prefix() {
+  local agent="${1:-cursor}"
+  if [[ "$agent" == "pi" ]]; then
+    echo "cadeh"
+  else
+    echo "/cadeh"
+  fi
+}
+
+_cadeh_continue_entry() {
+  local agent="${1:-cursor}"
+  local p
+  p="$(_cadeh_cmd_prefix "$agent")"
+  if [[ "$agent" == "pi" ]]; then
+    echo "prompt ${p}-continue"
+  else
+    echo "${p}-continue"
+  fi
+}
+
 _cadeh_suggest_slash() {
   local phase="${1:-}"
+  local agent="${2:-cursor}"
+  local p
+  p="$(_cadeh_cmd_prefix "$agent")"
   case "$phase" in
-    ""|brief) echo "/cadeh-spec" ;;
-    sdd) echo "/cadeh-spec (ou /cadeh-plan se SDD aprovado)" ;;
-    plan) echo "/cadeh-plan (ou /cadeh-tasks se plano aprovado)" ;;
-    tasks) echo "/cadeh-implement" ;;
-    implement) echo "/cadeh-implement" ;;
+    ""|brief) echo "${p}-spec" ;;
+    sdd) echo "${p}-spec (ou ${p}-plan se SDD aprovado)" ;;
+    plan) echo "${p}-plan (ou ${p}-tasks se plano aprovado)" ;;
+    tasks) echo "${p}-implement" ;;
+    implement) echo "${p}-implement" ;;
     validate) echo "docs/cadeh/validation-checklist.md" ;;
-    *) echo "/cadeh-continue" ;;
+    *) echo "${p}-continue" ;;
   esac
 }
 
@@ -52,12 +75,15 @@ _new_feature_memory() {
 
 cmd_continue() {
   local target="${1:-.}"
+  local agent
   target="$(cd "$target" 2>/dev/null && pwd)" || { err "Diretório inválido: $1"; exit 1; }
 
   if ! cadeh_project_installed "$target"; then
     err "CADEH não instalado — cadeh init $target"
     exit 1
   fi
+
+  agent="$(_detect_project_agent "$target" 2>/dev/null || echo "cursor")"
 
   local state="${target}/.cadeh/state.yml"
   local feature phase task branch notes updated
@@ -76,7 +102,7 @@ cmd_continue() {
     warn "Nenhuma feature ativa em .cadeh/state.yml"
     echo ""
     echo "  cadeh new feature <nome>"
-    echo "  Cursor: /cadeh-spec"
+    echo "  $(agent_label "$agent"): $(agent_spec_entry_hint "$agent")"
     exit 0
   fi
 
@@ -98,13 +124,13 @@ cmd_continue() {
   done
 
   if codegraph_project_ready "$target"; then
-    ok "CodeGraph: .codegraph/ (use MCP no Cursor)"
+    ok "CodeGraph: .codegraph/ ($(agent_label "$agent") — MCP)"
   else
-    warn "CodeGraph ausente — cadeh codegraph install"
+    warn "CodeGraph ausente — cadeh codegraph install --agent ${agent}"
   fi
 
   echo ""
-  log "No Cursor (novo chat): /cadeh-continue"
-  log "Comando sugerido: $(_cadeh_suggest_slash "$phase")"
+  log "No $(agent_label "$agent") (novo chat): $(_cadeh_continue_entry "$agent")"
+  log "Comando sugerido: $(_cadeh_suggest_slash "$phase" "$agent")"
   echo ""
 }

@@ -14,11 +14,7 @@ cadeh tlc status
 
 Alias: `cadeh tcl` → `cadeh tlc` (typo comum).
 
-Comando direto (equivalente):
-
-```bash
-npx @tech-leads-club/agent-skills install --skill tlc-spec-driven
-```
+A skill vem **embutida no pacote CADEH** (`vendor/tlc-spec-driven/`) e é copiada para o diretório do agente escolhido — sem `npx` nem pacote npm externo.
 
 Skill no projeto (por agente):
 
@@ -28,7 +24,7 @@ Skill no projeto (por agente):
 | Claude Code | `.claude/skills/tlc-spec-driven/SKILL.md` |
 | Codex | `.codex/skills/tlc-spec-driven/SKILL.md` |
 | Antigravity | `.agent/skills/tlc-spec-driven/SKILL.md` |
-| Pi Agent | `.pi/skills/tlc-spec-driven/SKILL.md` (espelhada após install) |
+| Pi Agent | `.pi/skills/tlc-spec-driven/SKILL.md` |
 
 ## Mapeamento de fases
 

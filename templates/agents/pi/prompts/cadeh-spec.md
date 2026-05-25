@@ -7,7 +7,7 @@ Elaboração do SDD usando a skill **tlc-spec-driven**. Não implemente código 
 
 ## 0. Skill TLC (obrigatório)
 
-1. Confirme `.cursor/skills/tlc-spec-driven/SKILL.md` ou `.pi/skills/tlc-spec-driven/SKILL.md` — se ausente: `cadeh tlc install`
+1. Confirme `.pi/skills/tlc-spec-driven/SKILL.md` — se ausente: `cadeh tlc install --agent pi`
 2. Leia **SKILL.md** e siga **`references/specify.md`** (processo Specify)
 3. Escopo ambíguo → **`references/discuss.md`** antes de fechar o spec
 

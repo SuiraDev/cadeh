@@ -140,15 +140,15 @@ agent_has_commands() {
   esac
 }
 
-# Mapeia agente CADEH → flag -a do @tech-leads-club/agent-skills
-tlc_agent_skills_cli() {
+# Diretório relativo da skill TLC no projeto (sem SKILL.md)
+tlc_skill_dest_dir() {
   case "$1" in
-    cursor) echo "cursor" ;;
-    claude) echo "claude-code" ;;
-    codex) echo "codex" ;;
-    antigravity) echo "antigravity" ;;
-    pi) echo "cursor" ;;  # Pi não tem target próprio — instala + espelha em .pi/skills/
-    *) echo "cursor" ;;
+    cursor) echo ".cursor/skills/tlc-spec-driven" ;;
+    claude) echo ".claude/skills/tlc-spec-driven" ;;
+    codex) echo ".codex/skills/tlc-spec-driven" ;;
+    antigravity) echo ".agent/skills/tlc-spec-driven" ;;
+    pi) echo ".pi/skills/tlc-spec-driven" ;;
+    *) echo ".cursor/skills/tlc-spec-driven" ;;
   esac
 }
 
@@ -169,14 +169,50 @@ tlc_skill_installed() {
   local agent="${2:-cursor}"
   local rel
   rel="$(tlc_skill_rel_path "$agent")"
-  if [[ -f "${target}/${rel}" ]]; then
-    return 0
-  fi
-  # Pi: aceita cópia só em .cursor (instalações antigas)
-  if [[ "$agent" == "pi" ]] && [[ -f "${target}/.cursor/skills/tlc-spec-driven/SKILL.md" ]]; then
-    return 0
-  fi
-  return 1
+  [[ -f "${target}/${rel}" ]]
+}
+
+# Dica: abrir IDE / recarregar MCP após init
+agent_open_project_hint() {
+  case "$1" in
+    cursor) echo "Abra o projeto no Cursor e reinicie/recarregue a janela (MCP CodeGraph)" ;;
+    claude) echo "Abra o projeto no Claude Code; recarregue se alterou MCP (.claude/mcp.json)" ;;
+    codex) echo "Abra o projeto no Codex; MCP em .codex/config.toml" ;;
+    antigravity) echo "Abra o projeto no Antigravity/VS Code; MCP em .cursor/mcp.json" ;;
+    pi) echo "Abra o projeto no Pi Agent; MCP em .mcp.json (pi-mcp-adapter)" ;;
+    *) echo "Abra o projeto no seu agente de IA" ;;
+  esac
+}
+
+# Dica: memória de código via MCP
+agent_codegraph_usage_hint() {
+  case "$1" in
+    cursor) echo "Memória de código: CodeGraph (.codegraph/) — ferramentas MCP no Cursor" ;;
+    claude) echo "Memória de código: CodeGraph (.codegraph/) — ferramentas MCP no Claude Code" ;;
+    codex) echo "Memória de código: CodeGraph (.codegraph/) — ferramentas MCP no Codex" ;;
+    antigravity) echo "Memória de código: CodeGraph (.codegraph/) — ferramentas MCP" ;;
+    pi) echo "Memória de código: CodeGraph (.codegraph/) — ferramentas MCP no Pi Agent" ;;
+    *) echo "Memória de código: CodeGraph (.codegraph/) — use ferramentas MCP" ;;
+  esac
+}
+
+# Dica: entrar no fluxo CADEH no chat do agente
+agent_chat_flow_hint() {
+  case "$1" in
+    pi) echo "Chat: prompt cadeh-continue → cadeh-spec (TLC) · fim: cadeh-memory (.pi/prompts/)" ;;
+    claude|cursor|codex|antigravity)
+      echo "Chat: /cadeh-continue → /cadeh-spec (TLC) · fim: /cadeh-memory" ;;
+    *)
+      echo "Chat: /cadeh-continue → /cadeh-spec (TLC) · fim: /cadeh-memory" ;;
+  esac
+}
+
+# Comando inicial quando não há feature ativa
+agent_spec_entry_hint() {
+  case "$1" in
+    pi) echo "Pi: prompt cadeh-spec (.pi/prompts/)" ;;
+    *) echo "/cadeh-spec" ;;
+  esac
 }
 
 # Pergunta s/n (default: n). Retorna 0 = sim.

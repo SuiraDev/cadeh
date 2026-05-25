@@ -148,6 +148,8 @@ install_codegraph_project() {
     log "Rule: .cursor/rules/cadeh-codegraph.mdc"
   fi
 
+  _cleanup_cursor_for_non_cursor_agent "$target" "$agent"
+
   return 0
 }
 
@@ -269,9 +271,12 @@ cmd_codegraph() {
 
   target="$(cd "$target" && pwd)"
 
+  local agent
+  agent="$(_detect_project_agent "$target" 2>/dev/null || echo "cursor")"
+
   case "$sub" in
     install|init)
-      install_codegraph_project "$target" "false" || exit 1
+      install_codegraph_project "$target" "false" "$agent" || exit 1
       ;;
     index)
       require_codegraph_runner || exit 1

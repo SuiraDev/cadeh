@@ -1,5 +1,7 @@
 # Estado do fluxo CADEH — máquina (complementa docs/memory e CodeGraph)
 # slug = arquivos em docs/sdd|plans|tasks|memory — phase: brief|sdd|plan|tasks|implement|validate
+# agent: cursor|claude|codex|antigravity|pi (definido em cadeh init --agent)
+agent: ""
 feature: ""
 phase: ""
 task: ""

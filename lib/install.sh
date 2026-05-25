@@ -1,5 +1,61 @@
 # shellcheck shell=bash
-# Instalação em projeto e regra global Cursor
+# Instalação em projeto e regra global por agente
+
+_prune_empty_dir() {
+  local d="$1"
+  [[ -d "$d" ]] || return 0
+  if [[ -z "$(find "$d" -mindepth 1 -maxdepth 1 2>/dev/null | head -1)" ]]; then
+    rmdir "$d" 2>/dev/null || true
+  fi
+}
+
+# Remove artefatos CADEH em .cursor/ quando o agente alvo não é Cursor (ex.: pi, claude, codex)
+_cleanup_cursor_for_non_cursor_agent() {
+  local target="$1"
+  local agent="$2"
+  local removed="false"
+
+  case "$agent" in
+    cursor|antigravity) return 0 ;;
+  esac
+
+  if [[ -d "${target}/.cursor/skills/tlc-spec-driven" ]]; then
+    rm -rf "${target}/.cursor/skills/tlc-spec-driven"
+    removed="true"
+  fi
+
+  rm -f "${target}/.cursor/rules/cadeh"*.mdc \
+        "${target}/.cursor/rules/harness"*.mdc \
+        "${target}/.cursor/rules/cadeh-codegraph.mdc" \
+        "${target}/.cursor/rules/codegraph.mdc" 2>/dev/null || true
+
+  rm -f "${target}/.cursor/commands/cadeh-"*.md \
+        "${target}/.cursor/commands/harness-"*.md 2>/dev/null || true
+
+  # Pi/Claude/Codex usam MCP próprio — não deixar .cursor/mcp.json legado do CodeGraph
+  if [[ -f "${target}/.cursor/mcp.json" ]] && grep -q '"codegraph"' "${target}/.cursor/mcp.json" 2>/dev/null; then
+    case "$agent" in
+      pi)
+        [[ -f "${target}/.mcp.json" ]] && rm -f "${target}/.cursor/mcp.json" && removed="true"
+        ;;
+      claude)
+        [[ -f "${target}/.claude/mcp.json" ]] && rm -f "${target}/.cursor/mcp.json" && removed="true"
+        ;;
+      codex)
+        grep -q "codegraph" "${target}/.codex/config.toml" 2>/dev/null && rm -f "${target}/.cursor/mcp.json" && removed="true"
+        ;;
+    esac
+  fi
+
+  _prune_empty_dir "${target}/.cursor/commands"
+  _prune_empty_dir "${target}/.cursor/rules"
+  _prune_empty_dir "${target}/.cursor/skills"
+  _prune_empty_dir "${target}/.cursor"
+
+  if [[ "$removed" == "true" ]]; then
+    log "Removido legado em .cursor/ (agente: $(agent_label "$agent"))"
+  fi
+}
 
 _cadeh_merge_gitignore() {
   local target="$1"
@@ -168,6 +224,12 @@ install_project() {
 
   install_tlc_skill "$target" "$force" "$agent" || warn "TLC skill não instalada — rode: cadeh tlc"
 
+  if [[ -f "${target}/.cadeh/state.yml" ]]; then
+    _cadeh_state_set_field "${target}/.cadeh/state.yml" agent "$agent"
+  fi
+
+  _cleanup_cursor_for_non_cursor_agent "$target" "$agent"
+
   ok "CADEH instalado em $target"
 }
 
@@ -220,6 +282,17 @@ install_global() {
 # Detecta qual agente está instalado no projeto
 _detect_project_agent() {
   local target="$1"
+  local state="${target}/.cadeh/state.yml"
+  local from_state
+
+  if [[ -f "$state" ]]; then
+    from_state="$(_cadeh_state_get "$state" agent)"
+    if [[ -n "$from_state" ]] && resolve_agent "$from_state" >/dev/null 2>&1; then
+      echo "$from_state"
+      return 0
+    fi
+  fi
+
   if [[ -f "${target}/.cursor/rules/cadeh.mdc" ]] || [[ -f "${target}/.cursor/rules/harness.mdc" ]]; then echo "cursor"; return 0; fi
   if [[ -f "${target}/CLAUDE.md" ]]; then echo "claude"; return 0; fi
   if [[ -f "${target}/.codex/rules/cadeh.rules" ]] || [[ -f "${target}/.codex/rules/harness.rules" ]]; then echo "codex"; return 0; fi
@@ -511,7 +584,9 @@ new_doc() {
         _set_feature_state "$target" "$slug" "sdd"
       fi
       _personalize_tasks_file "$target" "$slug" "$branch_ok"
-      log "Próximo: cadeh continue · Cursor: /cadeh-continue → /cadeh-spec (TLC Specify)"
+      local feat_agent
+      feat_agent="$(_detect_project_agent "$target" 2>/dev/null || echo "cursor")"
+      log "Próximo: cadeh continue · $(agent_label "$feat_agent"): $(_cadeh_continue_entry "$feat_agent") → $(_cadeh_suggest_slash "sdd" "$feat_agent")"
       ;;
     *)
       err "Tipo inválido: $kind"

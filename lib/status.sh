@@ -265,6 +265,11 @@ cmd_switch() {
   # 4. Reconfigurar CodeGraph MCP para o novo agente (sem reindexar)
   reinstall_codegraph_mcp "$target" "$new_agent"
 
+  if [[ -f "${target}/.cadeh/state.yml" ]]; then
+    _cadeh_state_set_field "${target}/.cadeh/state.yml" agent "$new_agent"
+  fi
+  _cleanup_cursor_for_non_cursor_agent "$target" "$new_agent"
+
   echo ""
   ok "Agente trocado: $(agent_label "$current_agent") → $(agent_label "$new_agent")"
   log "Docs, estado e memória preservados"

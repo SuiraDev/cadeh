@@ -31,7 +31,9 @@ _init_project_name() {
 _init_print_next_steps() {
   local target="$1"
   local with_global="$2"
+  local agent="${3:-cursor}"
   local cg_ok="false"
+  local step=3
 
   codegraph_project_ready "$target" && cg_ok="true"
 
@@ -39,20 +41,19 @@ _init_print_next_steps() {
   log "CADEH pronto em: ${target}"
   echo ""
   echo "Próximos passos:"
-  echo "  1. Abra o projeto no Cursor e reinicie/recarregue (MCP CodeGraph)"
+  echo "  1. $(agent_open_project_hint "$agent")"
   if [[ "$cg_ok" == "true" ]]; then
-    echo "  2. Memória de código: CodeGraph (.codegraph/) — use ferramentas MCP"
+    echo "  2. $(agent_codegraph_usage_hint "$agent")"
   else
-    echo "  2. Instale CodeGraph: cadeh codegraph install"
+    echo "  2. Instale CodeGraph: cadeh codegraph install --agent ${agent}"
   fi
   if [[ "$with_global" != "true" ]]; then
-    echo "  3. (Opcional) Regra global: cadeh global"
-    echo "  4. Nova feature: cadeh new feature <nome>"
-    echo "  5. Chat: /cadeh-continue → /cadeh-spec (TLC) · fim: /cadeh-memory"
-  else
-    echo "  3. Nova feature: cadeh new feature <nome>  # cria branch feature/<slug>"
-    echo "  4. Chat: /cadeh-continue → /cadeh-spec (TLC) · fim: /cadeh-memory"
+    echo "  ${step}. (Opcional) Regra global: cadeh global --agent ${agent}"
+    step=$((step + 1))
   fi
+  echo "  ${step}. Nova feature: cadeh new feature <nome>  # cria branch feature/<slug> se Git"
+  step=$((step + 1))
+  echo "  ${step}. $(agent_chat_flow_hint "$agent")"
   echo ""
   echo "TLC: docs/cadeh/tlc-integration.md · Estado: .cadeh/state.yml"
 }
@@ -123,5 +124,5 @@ cmd_init() {
 
   echo ""
   doctor_check "$target" "$agent" || true
-  _init_print_next_steps "$target" "$with_global"
+  _init_print_next_steps "$target" "$with_global" "$agent"
 }

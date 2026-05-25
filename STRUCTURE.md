@@ -20,7 +20,9 @@ cadeh/
 │   ├── git.sh             # Wrappers Git
 │   ├── init.sh            # cadeh init
 │   ├── codegraph.sh       # Integração CodeGraph + MCP por agente
-│   ├── tlc.sh             # TLC Spec-Driven
+│   ├── tlc.sh             # TLC Spec-Driven (cópia de vendor/)
+├── vendor/
+│   └── tlc-spec-driven/   # Skill TLC embutida (sem npx)
 │   └── state.sh           # Estado (.cadeh/state.yml) + continue + memory
 │
 ├── spec/                  # Fontes Markdown (canônicas)
